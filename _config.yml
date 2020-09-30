@@ -16,9 +16,9 @@
 title: Just another dev blog...
 email: chrisfarmer19801@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  Just a Dev hoping to make a difference. I'm only just starting this but I imagine 
+  it's going to contain my painful learnings following unfinished and poorly maintained tutorials 
+  elsewhere... love you, thanks for reading :)
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: ign3u5
