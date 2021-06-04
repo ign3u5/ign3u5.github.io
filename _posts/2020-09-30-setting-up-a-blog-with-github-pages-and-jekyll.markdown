@@ -17,40 +17,35 @@ I can't see myself going back and updating these when they get out of date unles
 
 # The TLDR Steps
 ### Install Ruby
-If you have Chocolatey installed, running the following should do the trick
+If you have Chocolatey installed, running the following should do the trick  
 `choco install ruby` 
 ### Refresh your PATH variables
-You have to refresh your current environment in order to use the `ruby` and `gem` commands
+You have to refresh your current environment in order to use the `ruby` and `gem` commands  
 `refreshenv`
 ### Install Bundler
-This is when things start getting messy, run the following command
+This is when things start getting messy, run the following command  
 `gem install bundler`
 ### Refresh again for Bundler
-You know what to do...
+You know what to do...  
 `refreshenv`
 ### Initialise Bundler
-You have to initialise Bundler in the current directory, this is a step ommited by GitHub docs... who knows why
+You have to initialise Bundler in the current directory, this is a step ommited by GitHub docs... who knows why  
 `bundler init`
 ### Install msys2
-If you already have this installed, don't bother with this next step
+If you already have this installed, don't bother with this next step  
 `ridk install`
+### Add the Jekyll gem
+Not too sure whether this step works with a version number yet but I'll update if not  
+`bundle add jekyll version`
+### Initialise a new Jekyll site
+The follow command will set up all the code necessary to run the site.  
+`bundle exec jekyll new . --force`
+### View it locally
+Go to localhost:4000 to view the site once it's running  
+`bundle exec jekyll serve`
 
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+# A Deepish Dive
+### A Chocolatey Surprise
+Chocolatey Software is a package management solution. That's all there is to know really. It's hugely easy to install and their docs really are full coverage. Just pop over to [this site][choco-site] to find out about installation.
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
-
-Jekyll also offers powerful support for code snippets:
-
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
-
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
-
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+[choco-site]: https://chocolatey.org/docs/installation
