@@ -17,7 +17,7 @@ There are various ways of running a local EventStore instance, the one I would r
 For the following, you'll need to make sure you have Docker and, by extension, docker-compose installed.
 1. Create a new empty folder and name it something suitable (i.e. EventStoreContainer)
 2. Create a new file and name it docker-compose.yaml
-3. Add the following to the file, in our case, we're going to be running a 20.10.2 instance which is the latest LTS version of EventStore. If you want to use a different version, go to their [Docker Hub](https://hub.docker.com/r/eventstore/eventstore/tags?page=1&ordering=last_updated) page and find it's tag for reference there.
+3. Add the following to the file, in our case, we're going to be running a 20.10.2 instance which is the latest LTS version of EventStore. If you want to use a different version, go to their [Docker Hub](https://hub.docker.com/r/eventstore/eventstore/tags?page=1&ordering=last_updated) page and find it's tag for reference there.  
 ```
 version: '3.4'
 
@@ -56,7 +56,7 @@ This will start an instance of EventStore and you should see an output in the te
 **TCP Client Configuration**
 1. Open a new CLI project in .NET in your editor of choice.
 2. Go to the package manager and include a reference to the EventStore.Client package from NuGet. There will be a few other client options but these are the gRPC clients. 
-3. The following code is going to setup a connection with TLS disabled from the client end and append an event to test-stream.
+3. The following code is going to setup a connection with TLS disabled from the client end and append an event to test-stream.  
 ```
 var settings = ConnectionSettings.Create()
 			.DisableTls();
@@ -71,13 +71,13 @@ var evt = new EventData(Guid.NewGuid(), "testEvent", true, data, metadata);
 
 await conn.AppendToStreamAsync("test-stream", ExpectedVersion.Any, evt);
 ```  
-Before we move on, there are a few things of note here. The first is that there are multiple different ways to setup a connection to EventStore from the client that all achieve the same behaviour. This, in my opinion, is hugely confusing and unecessary. Below, I'll list some interchangable variations of line 4 that will all do the same thing.
+Before we move on, there are a few things of note here. The first is that there are multiple different ways to setup a connection to EventStore from the client that all achieve the same behaviour. This, in my opinion, is hugely confusing and unecessary. Below, I'll list some interchangable variations of line 4 that will all do the same thing.  
 ```
 var conn = EventStoreConnection.Create(settings.Build(), new Uri("tcp://localhost:1113"))
-```
+```  
 ```
 var conn = EventStoreConnection.Create("ConnectTo=tcp://localhost:1113;UseSslConnection=false");
-```
+```  
 Anyway, moving on  
 
 4. When you've run the code, switch back to your [localhost:2113](http://localhost:2113) tab and go to the *Stream Browser* tab (fyi, this would not have been available if we hadn't include the `EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true` config option in the yaml).  
@@ -89,7 +89,7 @@ Setting up EventStore as a secure cluster of nodes is what you would expect from
 **Setup with Docker**  
 1. Create a new empty folder and name it something suitable (i.e. EventStoreContainer)
 2. Create a new file and name it docker-compose.yaml
-3. Add the following to the file, in our case, we're going to be running a 20.10.2 instance which is the latest LTS version of EventStore. If you want to use a different version, go to their [Docker Hub](https://hub.docker.com/r/eventstore/eventstore/tags?page=1&ordering=last_updated) page and find it's tag for reference there.
+3. Add the following to the file, in our case, we're going to be running a 20.10.2 instance which is the latest LTS version of EventStore. If you want to use a different version, go to their [Docker Hub](https://hub.docker.com/r/eventstore/eventstore/tags?page=1&ordering=last_updated) page and find it's tag for reference there.  
 ```
 version: "3.5"
 
@@ -207,7 +207,7 @@ networks:
       driver: default
       config:
         - subnet: 172.30.240.0/24
-```
+```  
 4. Add a sub-directory to your *EventStoreContainer* folder called *certs*
 5. Open a command prompt in that directory and run  
 `docker-compose up`  
