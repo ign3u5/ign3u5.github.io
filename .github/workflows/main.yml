@@ -31,7 +31,7 @@ jobs:
           path: dist/
       - name: Archive code coverage result
         if: success()
-        uses: action/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with: 
           name: deploy_coverage
           token: ${{ secrets.PAT }}
@@ -43,7 +43,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download build
-        uses: action/download-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: deploy_dist
       - name: Deploy to GitHub Pages
