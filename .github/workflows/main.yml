@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Use Node 12.x
         uses: actions/setup-node@v1
         with: 
@@ -24,13 +24,13 @@ jobs:
         run: npm run test
       - name: Archive build
         if: success()
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: deploy_dist
-          path: dist
+          path: dist/
       - name: Archive code coverage result
         if: success()
-        uses: action/upload-artifact@v1
+        uses: action/upload-artifact@v2
         with: 
           name: deploy_coverage
           path: coverage
@@ -39,9 +39,9 @@ jobs:
     needs: build
     steps: 
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Download build
-        uses: action/download-artifact@v1
+        uses: action/download-artifact@v2
         with:
           name: deploy_dist
       - name: Deploy to GitHub Pages
