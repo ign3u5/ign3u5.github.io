@@ -1,27 +1,27 @@
 name: Page CI
 
-on: 
+on:
   push:
-    branches: 
+    branches:
       - 'master'
-      
-jobs: 
+
+jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Use Node 12.x
         uses: actions/setup-node@v1
-        with: 
+        with:
           node-version: '12.x'
       - name: Install dependencies
         run: npm install
       - name: Build
         run: npm run build
       - name: Test
-        run: npm run test
+        run: npm run test:ci
       - name: Archive build
         if: success()
         uses: actions/upload-artifact@v2
@@ -32,14 +32,14 @@ jobs:
       - name: Archive code coverage result
         if: success()
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: deploy_coverage
           token: ${{ secrets.PAT }}
           path: coverage
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    steps: 
+    steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download build
