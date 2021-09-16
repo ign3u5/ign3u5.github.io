@@ -9,7 +9,7 @@ import { ThemePalette } from '@angular/material/core';
 export class AppComponent {
   title = 'blog';
   isDarkTheme = true;
-  color: ThemePalette = "accent";
+  color: ThemePalette = "primary";
 
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;

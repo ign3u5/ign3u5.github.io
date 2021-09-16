@@ -1,18 +1,18 @@
 @use 'sass:map';
 @use '~@angular/material' as mat;
 
-$my-primary-palette: mat.$purple-palette;
-$my-accent-palette: mat.$green-palette;
+$my-primary-palette: mat.define-palette(mat.$purple-palette);
+$my-accent-palette: mat.define-palette(mat.$green-palette);
 $my-dark-theme: mat.define-dark-theme((
   color: (
-    primary: $my-accent-palette,
-    accent: $my-primary-palette,
+    primary: mat.define-palette(mat.$purple-palette),
+    accent: mat.define-palette(mat.$green-palette),
   )
   ));
 $my-light-theme: mat.define-light-theme((
   color: (
-    primary: $my-primary-palette,
-    accent: $my-accent-palette,
+    primary: mat.define-palette(mat.$purple-palette),
+    accent: mat.define-palette(mat.$amber-palette),
     )
 ));
 
@@ -49,6 +49,10 @@ $foregrounds: (
   $foreground: map.get($foregrounds, $theme);
   $color: map.get($foreground, $value);
   @return $color;
+}
+
+@function get-theme($theme) {
+  @return map.get($themes, $theme);
 }
 
 @mixin apply-theme($theme) {
