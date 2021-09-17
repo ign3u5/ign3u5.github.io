@@ -1,0 +1,7 @@
+@use 'src/styles/theme';
+.nav-tabs {
+  margin-bottom: 2vh;
+  a {
+      color: var(--foreground);
+  }
+}

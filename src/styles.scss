@@ -1,1 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@use 'sass:map';
+@use '~@angular/material' as mat;
+@use 'src/styles/theme';
+@import '~@angular/material/theming';
+@include mat.core();
+@import '~bootstrap/scss/bootstrap';
+
+html, body { height: 100%; }
+
+.app-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  justify-items: left;
+  grid-template:
+  ". navigation ." 4vh
+  ". content ."
+  / auto clamp(60vw, 1000px, 90vw) auto;
+  color: var(--foreground);
+  background-color: var(--background);
+
+  @include mat.all-component-colors(theme.$my-light-theme);
+  @include theme.apply-theme(light);
+}
+
+.dark-theme{
+  @include theme.apply-theme(dark);
+  @include mat.all-component-colors(theme.$my-dark-theme);
+}
+
+.float {
+  position: fixed;
+  bottom: 1vh;
+  right: 1vh;
+}
+
+
+app-navigation {
+  grid-area: navigation;
+  width: 100%;
+}
+
+.app-content {
+  grid-area: content;
+}
+
+
+
+
+
