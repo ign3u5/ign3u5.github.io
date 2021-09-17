@@ -13,6 +13,5 @@ export class AppComponent {
 
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;
-    console.log(this.isDarkTheme);
   }
 }
