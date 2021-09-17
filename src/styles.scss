@@ -3,15 +3,10 @@
 /* Importing Bootstrap SCSS file. */
 @use 'sass:map';
 @use '~@angular/material' as mat;
-@use './styles/theme';
+@use 'src/styles/theme';
 @import '~@angular/material/theming';
 @include mat.core();
 @import '~bootstrap/scss/bootstrap';
-
-
-h1 {
-  color: var(--onBackground);
-}
 
 html, body { height: 100%; }
 
@@ -24,13 +19,16 @@ html, body { height: 100%; }
   ". navigation ." 4vh
   ". content ."
   / auto clamp(60vw, 1000px, 90vw) auto;
+  color: var(--foreground);
+  background-color: var(--background);
 
-  @include mat.all-component-colors(theme.$my-dark-theme);
+  @include mat.all-component-colors(theme.$my-light-theme);
   @include theme.apply-theme(light);
-  &.dark-theme{
-    @include theme.apply-theme(dark);
-    @include mat.all-component-colors(theme.$my-dark-theme);
-  }
+}
+
+.dark-theme{
+  @include theme.apply-theme(dark);
+  @include mat.all-component-colors(theme.$my-dark-theme);
 }
 
 .float {
