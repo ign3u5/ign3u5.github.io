@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'blog';
+  isDarkTheme = true;
+  color: ThemePalette = "primary";
+
+  toggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
+    console.log(this.isDarkTheme);
+  }
 }
