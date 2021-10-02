@@ -56,4 +56,6 @@ $foregrounds: (
 @mixin apply-theme($theme) {
   --background: #{get-background-from-theme($theme, background)};
   --foreground: #{get-foreground-from-theme($theme, base)};
+  --primary: #{get-color-from-theme($theme, primary)};
+  --accent: #{get-color-from-theme($theme, accent)};
 }

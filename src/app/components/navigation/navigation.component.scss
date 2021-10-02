@@ -4,4 +4,8 @@
   a {
       color: var(--foreground);
   }
+  .active {
+    background-color: var(--accent);
+    color: var(--background);
+  }
 }
