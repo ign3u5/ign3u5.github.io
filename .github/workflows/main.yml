@@ -17,9 +17,11 @@ jobs:
         with:
           node-version: '12.x'
       - name: Install dependencies
-        run: npm install
+        working-directory: ./gatsby-starter-minimal-blog
+        run: yarn install
       - name: Build
-        run: npm run build
+        working-directory: ./gatsby-starter-minimal-blog
+        run: yarn run build
       - name: Archive build
         if: success()
         uses: actions/upload-artifact@v2
