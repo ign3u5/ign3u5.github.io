@@ -1,0 +1,338 @@
+---
+title: "SOLID Development Principles"
+date: 2024-04-24
+slug: "/solid-principles"
+tags: 
+    - SOLID
+    - OOP
+    - Design Patterns
+---
+
+# SOLID Principles
+
+Split files up with folders. Split by feature (core, infrastructure, UI) or type of file (Model, Controller, Interfaces)
+
+##### *S*ingle responsibility principle
+
+A class should only have a single responsibility. Only changes to one part of the software's specification should affect the specification of the class
+
+##### *O*pen-closed principle
+
+Software entities should be **open** for extension but **closed** to modification
+
+##### *L*iskov substitution principle
+
+Objects in a program should be replaceable with instances of their sub-types (child classes) with the programming continuing to function correctly. I.e. the calling functions and properties shouldn't change in the extension/child classes, but the integrated functionality should. 
+
+##### *I*nterface segregation principle
+
+Many client-specific interfaces are better than one general-purpose interface
+
+##### *D*ependency inversion principle
+
+Components should depend upon abstractions not on concretions (concrete classes)
+
+## Single Responsibility Principle (SRP)
+
+What is a responsibility?
+
+Each responsibility is a different axis of change
+
+Examples include:
+
+- Persistance
+- Logging
+- Validation
+- Business Logic
+
+If two details are integrated into the same class this introduces tight coupling. Therefore, if either of these details need to change this will affect the other and the way the entire class is implemented.
+
+Cohesion
+
+> Connection inside elements in classes
+
+Coupling
+
+> Connection of classes to each other
+
+### Separation of Concerns
+
+Programs should be separated into distinct sections, each addressing a separate concern, or set of information that affects the program.
+
+Keep classes small, focused and testable
+
+## Open / Closed Principle (OCP)
+
+Software entities (classes, modules, function, etc). Should be open for extension, but closed for modification. 
+
+It should be possible to change the behaviour of a method without editing its source code.
+
+### Open to extension
+
+New behaviour can be added in the future
+
+Code that is closed to extension has fixed behaviour
+
+### Closed to modification
+
+Changes to source or binary code are not required
+
+The only way to change the behaviour of code that is closed to extension is to change the code itself.
+
+##### Why should it be closed to modification?
+
+Less likely to introduce bugs in code we don't touch or redeploy
+
+Less likely to break dependent code when we don't have to deploy updates
+
+Fewer conditionals in code that is open to extension
+
+Bug fixes are ok - exception to the principles rule
+
+Balance abstraction and concreteness
+
+Abstraction adds complexity
+
+Predict where variation is needed and apply abstraction as needed (pain driven development)
+
+"new" is glue
+
+Should be resistant to newing up instances of objects inside classes
+
+How can you predict future changes?
+
+Start concrete
+
+Modify the code the first time or two
+
+By the third modification, consider making the code open to extension
+for that axis of change
+
+### Typical approaches to OCP
+
+Examples:
+
+```csharp
+public class DoOneThing
+{
+	public void Execute()
+	{
+		Console.WriteLine("Hello, World!");
+	}
+}
+```
+
+- Parameters
+    
+    ```csharp
+    public class DoOneThing
+    {
+    	public void Execute(string message)
+    	{
+    		Console.WriteLine(message);
+    	}
+    }
+    ```
+    
+- Inheritance
+    
+    ```csharp
+    public class DoOneThing
+    {
+    	public virtual void Execute()
+    	{
+    		Console.WriteLine("Hello, World!");
+    	}
+    }
+    public class DoAnotherThing : DoOneThing
+    {
+    	public override void Execute()
+    	{
+    		Console.WriteLine("Goodbye, World!");
+    	}
+    }
+    ```
+    
+- Composition / Injection
+    
+    ```csharp
+    public class DoOneThing
+    {
+    	private readonly MessageService _messageService;
+
+    	public DoOneThing (MessageService messageService) 
+    		=> _messageService = messageService;
+
+    	public virtual void Execute()
+    	{
+    		Console.WriteLine(messageService.GetMessage());
+    	}
+    }
+    ```
+    
+
+Prefer implementing new features in new classes.
+
+Design classes from scratch to suit problem at hand
+
+Nothing in current system depends on it (no dependencies)
+
+Can add behaviour without touching existing code
+
+Can follow SRP in the new class
+
+Can be unit-tested (even if the rest of the application can't be)
+
+### Key Takeaways
+
+- Solve the problem first using simple, concrete code
+- Identify the kinds of changes the application is likely to continue needing
+- Modify code to be extensible along the axis of change you've identified
+    - Without the need to modify its source each time
+
+# Liskov Substitution Principle (LSP)
+
+Sub-types must be substitutable for their base types
+
+LSP states that the IS-A relationship is insufficient and should be replaced with IS-SUBSTITUTABLE-FOR
+
+### Fixing LSP Violations
+
+- Follow the "Tell, Don't Ask" principle
+    - Encapsulate the logic for a particular action inside of the class being called. Don't implement the logic in the calling class.
+- Minimise null checks with
+    - C# features
+    - Guard clauses
+    - Null Object design pattern
+- Follow ISP and be sure to fully implement interfaces
+
+IS-A - inheritance relationship
+
+HAS-A - parameter relationship
+
+### Key Takeaways
+
+- Sub-types must be substitutable for their base types
+- Ensure base type invariants are enforced
+- Look for
+    - Type checking
+    - Null checking
+    - NotImplementedException
+
+## Interface Segregation Principle (ISP)
+
+Clients should not be forced to depend on methods they do not use.
+
+Prefer small, cohesive interfaces to large, "fat" ones
+
+Violating ISP results in classes that depend on things they don't need. 
+
+### What does interface mean in ISP?
+
+C# interface type/keyword
+
+Public (or accessible) interface of a class
+
+A type's interface in this context is whatever can be accessed by client code working with an instance of that type.
+
+### What's a client?
+
+In this context, the client is the code that is interacting with an instance of the interface. It's the calling code.
+
+### Splitting up large interfaces
+
+```csharp
+public interface ILargeInterface : SmallInterfaceOne, SmallInterfaceTwo
+{
+}
+```
+
+If you originally had all of the template code in the ILargeInterface and then split it down into the two smaller interface. Implementing those two small interfaces will give the ILargeInterface the same template and will allow the code that was originally implementing ILargeInterface to continue working. It is a non-breaking change.
+
+### Fixing ISP Violations
+
+- Break up large interfaces into smaller ones
+    - Compose fat interfaces from smaller ones for backward compatibility
+- To address large interfaces you don't control
+    - Create a small, cohesive interface
+    - Use the Adapter design pattern so your code can work with the Adapter.
+- Clients should own and define their interfaces
+
+### Where do interfaces live in our apps?
+
+- Client code should define and own interfaces it uses
+- Interfaces should be declared where both client code and implementations can access it
+
+### Key Takeaways
+
+- Prefer small, cohesive interfaces to large, expansive ones
+- Following ISP helps with SRP and LSP
+- Break up large interfaces by using
+    - Interface inheritance
+    - The Adapter design pattern
+
+## Dependency Inversion Principle
+
+High-level modules should not depend on low-level modules. Both should depend on abstractions. 
+
+Abstractions should not depend on details.
+
+Details should depend on abstractions.
+
+### Dependencies in C#
+
+- References required to compile
+- References required to run
+
+High Level
+
+More abstract
+
+Business rulres
+
+Process-oriented
+
+Furhter from input/output (i/o)
+
+Low Level
+
+- Closer to I/O
+- "Plumbing" code
+
+Interacts with specific external systems and hardware
+
+### Abstractions in C#
+
+- Interfaces
+- Abstract base classes
+- "Types you can't instantiate"
+- Abstractions shouldn't be couple to details
+- Abstractions describe what
+    - Send a message
+    - Store a customer record
+- Details specify how
+    - Send an SMTP email over port 25
+    - Serialise Customer to JSON and store in a text file
+
+### Hidden Direct Dependencies
+
+- Direct use of low level dependencies
+- Static calls and *new*
+- Cause pain
+    - Tight coupling
+    - Difficult to isolate and unit test
+    - Duplication
+
+### Explicit Dependencies Principle
+
+- Your class shouldn't surprise clients with dependencies
+- List them up front, in the constructor
+- Think of them as ingredients in a cooking recipe.
+
+### Key Takeaways
+
+- Most classes should depend on abstractions, not implementation details
+- Abstractions shouldn't leak details
+- Classes should be explicit about their dependencies
+- Client should inject dependencies when they create other classes
+- Structure your solutions to leverage dependency inversion
